@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit()">
+    <label for="primaryAccountNumber">Primary Account Number (PAN)</label>
+    <input type="text" id="primaryAccountNumber" name="primaryAccountNumber">
+
+    <label for="name">Name of the credit card owner</label>
+    <input type="text" id="name" name="name">
+
+    <label for="expirationDate">Expiration Date</label>
+    <input type="text" id="expirationDate" name="expirationDate">
+
+    <label for="cardValidationCode">Card Validation Code (CVC)</label>
+    <input type="text" id="cardValidationCode" name="cardValidationCode">
+
+    <button type="submit">Add new credit card</button>
+</form>
