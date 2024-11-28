@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, Signal, signal } from '@angular/core';
 import { CreditCard } from './models/creditCard';
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,8 @@ private creditCards = signal<CreditCard[]>([]);
     
   constructor() { }
 
-  getCreditCards() {
-    return this.creditCards;
+  getCreditCards() : Signal<CreditCard[]> {
+    return this.creditCards.asReadonly();
   }
 
   addCreditCard(creditCard: CreditCard) {

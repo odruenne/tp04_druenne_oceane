@@ -1,1 +1,10 @@
-<p>credit-cards-list works!</p>
+<div id="main-div">
+    <h1>Credit cards list :</h1>
+    <div *ngFor="let creditCard of creditCards(); index as i" id="creditCardDiv">
+        <p><strong>Primary Account Number (PAN) : </strong>{{creditCard.primaryAccountNumber | transformToAsterisk }}</p>
+        <p><strong>Name of the owner : </strong>{{creditCard.name}}</p>
+        <p><strong>Expiration date (MM/YYYY) : </strong>{{creditCard.expirationDate}}</p>
+        <p><strong>Card Validation Code (CVC) : </strong>{{creditCard.cardValidationCode}}</p>
+        <button (click)="onDeleteCreditCard(i)">Delete this credit card</button>
+    </div>
+</div>

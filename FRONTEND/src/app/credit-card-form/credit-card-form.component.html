@@ -1,15 +1,15 @@
-<form (ngSubmit)="onSubmit()">
+<form [formGroup]="newCreditCardForm" (ngSubmit)="onSubmit($event)">
     <label for="primaryAccountNumber">Primary Account Number (PAN)</label>
-    <input type="text" id="primaryAccountNumber" name="primaryAccountNumber">
+    <input type="text" id="primaryAccountNumber" name="primaryAccountNumber" formControlName="primaryAccountNumber" appFormFieldHighlight>
 
     <label for="name">Name of the credit card owner</label>
-    <input type="text" id="name" name="name">
+    <input type="text" id="name" name="name" formControlName="name" appFormFieldHighlight>
 
     <label for="expirationDate">Expiration Date</label>
-    <input type="text" id="expirationDate" name="expirationDate">
+    <input type="text" id="expirationDate" name="expirationDate" formControlName="expirationDate" appFormFieldHighlight>
 
     <label for="cardValidationCode">Card Validation Code (CVC)</label>
-    <input type="text" id="cardValidationCode" name="cardValidationCode">
+    <input type="text" id="cardValidationCode" name="cardValidationCode" formControlName="cardValidationCode" appFormFieldHighlight>
 
     <button type="submit">Add new credit card</button>
 </form>

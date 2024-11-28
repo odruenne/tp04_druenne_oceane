@@ -1,46 +1,48 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import  {Validators } from '@angular/forms';
 import { CreditCard } from '../models/creditCard';
 import { CreditCardService } from '../creditCard.service';
+import { CreditCardFormFieldHighlightDirective } from '../credit-card-form-field-highlight.directive';
 
 @Component({
   selector: 'app-credit-card-form',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule, CreditCardFormFieldHighlightDirective],
   templateUrl: './credit-card-form.component.html',
   styleUrl: './credit-card-form.component.css'
 })
-export class CreditCardFormComponent implements OnInit, OnDestroy {
+export class CreditCardFormComponent {
   newCreditCardForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private creditCardService: CreditCardService) {
       this.newCreditCardForm = this.formBuilder.group({
         primaryAccountNumber: ['',[Validators.required, Validators.pattern('[0-9]+')]],
         name: ['', [Validators.required, Validators.maxLength(25),Validators.pattern('^[a-zA-Z ]*$')]],
-        expirationDate: ['',[Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\/\d{4}$')]],
+        expirationDate: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\/\\d{2,4}$')]],
         cardValidationCode: ['',[Validators.required, Validators.maxLength(3),Validators.pattern('[0-9]+')]]
       });
   }
 
-  ngOnInit(): void {
-    
-  }
 
-  ngOnDestroy(): void {
-    this.newCreditCardForm.reset();
-  }
+  onSubmit(event: Event) : void {
+    event.preventDefault();
+    if (this.newCreditCardForm.valid) {
+      const newCreditCard: CreditCard = {
+        primaryAccountNumber : this.newCreditCardForm.value.primaryAccountNumber,
+        name: this.newCreditCardForm.value.name,
+        expirationDate: this.newCreditCardForm.value.expirationDate,
+        cardValidationCode: this.newCreditCardForm.value.cardValidationCode
+      };
 
-  onSubmit() : void {
-    const newCreditCard: CreditCard = {
-      primaryAccountNumber : this.newCreditCardForm.value.primaryAccountNumber,
-      name: this.newCreditCardForm.value.name,
-      expirationDate: this.newCreditCardForm.value.expirationDate,
-      cardValidationCode: this.newCreditCardForm.value.cardValidationCode
-    };
-
-    this.creditCardService.addCreditCard(newCreditCard);
-    console.log("new Credit Card: ", newCreditCard);
-    this.newCreditCardForm.reset();
+      this.creditCardService.addCreditCard(newCreditCard);
+      // TESTE CHAQUE TRUC POUR VOIR SI T'EN AS VRAIMENT BESOIN ET COMPRENDRE KIFÉKOI
+      this.newCreditCardForm.clearValidators();
+      this.newCreditCardForm.markAsPristine();
+      this.newCreditCardForm.markAsUntouched();
+      this.newCreditCardForm.setErrors(null);
+      this.newCreditCardForm.updateValueAndValidity();
+      this.newCreditCardForm.reset();
+    }
   }
 }
