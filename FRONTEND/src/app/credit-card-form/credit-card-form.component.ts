@@ -36,13 +36,10 @@ export class CreditCardFormComponent {
       };
 
       this.creditCardService.addCreditCard(newCreditCard);
-      // TESTE CHAQUE TRUC POUR VOIR SI T'EN AS VRAIMENT BESOIN ET COMPRENDRE KIFÉKOI
-      this.newCreditCardForm.clearValidators();
-      this.newCreditCardForm.markAsPristine();
-      this.newCreditCardForm.markAsUntouched();
-      this.newCreditCardForm.setErrors(null);
+      this.newCreditCardForm.clearValidators(); 
       this.newCreditCardForm.updateValueAndValidity();
       this.newCreditCardForm.reset();
+      
     }
   }
 }
